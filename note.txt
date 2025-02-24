@@ -1,0 +1,11 @@
+theo multi layer spring:
+1 request di qua it nhat 3 layer
+- controller : mapping endpoint
+- service: logic lien quan sub domain
+- repository: tuong tac dbms, he thong ngoai(file, he thong khac...)
+
+controller -> service -> repo
+khong duoc nhay tu controller -> repo
+
+tao API phai tuan theo layer architecture
+gom 3 layer: controller - service - repository

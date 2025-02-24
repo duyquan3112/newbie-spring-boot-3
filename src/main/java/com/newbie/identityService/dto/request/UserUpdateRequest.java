@@ -1,38 +1,12 @@
-package com.newbie.identityService.entity;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+package com.newbie.identityService.dto.request;
 
 import java.time.LocalDate;
 
-@Entity
-public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID) //gen random id, cause long start from 0 -> n
-    private String id; //id can be String
-    private String username;
+public class UserUpdateRequest {
     private String password;
     private String firstName;
     private String lastName;
     private LocalDate dob;
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
 
     public String getPassword() {
         return password;
