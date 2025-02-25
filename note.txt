@@ -9,3 +9,10 @@ khong duoc nhay tu controller -> repo
 
 tao API phai tuan theo layer architecture
 gom 3 layer: controller - service - repository
+
+-----
+
+@ControllerAdvice giup quan ly exception ve 1 cho
+@ExceptionHandler quan ly cach exception tra ve client
+
+co the tao custom annotation de valid field theo business mong muon
