@@ -16,3 +16,8 @@ gom 3 layer: controller - service - repository
 @ExceptionHandler quan ly cach exception tra ve client
 
 co the tao custom annotation de valid field theo business mong muon
+
+can phai chuan hoa response tra ve de cac client khac nhau deu co the xu ly
+duoc (web/mobile)
+
+nen tao enum de quan ly cac error code, success code va custom exception de throw khi co loi
