@@ -22,6 +22,13 @@ public class UserService {
         if (userRepository.existsByUsername(request.getUsername())) {
             throw new AppException(ErrorCode.USER_EXISTED);
         }
+
+//        UserCreationRequest userCreationRequest = UserCreationRequest.builder()
+//                .username("")
+//                .firstName("")
+//                .password("")
+//                .build();
+
         user.setUsername(request.getUsername());
         user.setPassword(request.getPassword());
         user.setFirstName(request.getFirstName());
