@@ -2,6 +2,7 @@ package com.newbie.identityService.exception;
 
 public enum ErrorCode {
     USER_EXISTED(401, "User existed!"),
+    USER_NOT_EXISTED(401, "User not existed!"),
     INVALID_KEY(-2, "Invalid message key."),
     UNKNOWN_EXCEPTION(-1, "unknown exception"),
     USERNAME_INVALID(401, "Username must be at least 3-characters"),
