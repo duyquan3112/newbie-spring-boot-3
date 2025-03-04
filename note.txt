@@ -21,3 +21,5 @@ can phai chuan hoa response tra ve de cac client khac nhau deu co the xu ly
 duoc (web/mobile)
 
 nen tao enum de quan ly cac error code, success code va custom exception de throw khi co loi
+
+trong service khi tra ve data cho controller thi khong nen tra entity, nen tra ve 1 DTO
