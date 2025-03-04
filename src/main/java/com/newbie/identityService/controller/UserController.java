@@ -1,6 +1,6 @@
 package com.newbie.identityService.controller;
 
-import com.newbie.identityService.dto.request.ApiResponse;
+import com.newbie.identityService.dto.response.ApiResponse;
 import com.newbie.identityService.dto.request.SuccessCode;
 import com.newbie.identityService.dto.request.UserCreationRequest;
 import com.newbie.identityService.dto.request.UserUpdateRequest;

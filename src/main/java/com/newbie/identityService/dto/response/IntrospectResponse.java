@@ -9,8 +9,7 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class AuthenticationResponse {
-    @JsonProperty("isAuthenticated") //de giu nguyen tien to "is"
-    boolean isAuthenticated;
-    String accessToken;
+public class IntrospectResponse {
+    @JsonProperty("isValid")
+    boolean isValid;
 }
