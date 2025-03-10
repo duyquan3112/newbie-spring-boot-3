@@ -11,10 +11,14 @@ import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequestMapping("/users")
 @RequiredArgsConstructor
@@ -23,8 +27,8 @@ public class UserController {
     UserService userService;
 
     @PostMapping("/create-user")
-    ApiResponse<User> createUser(@RequestBody @Valid UserCreationRequest request) {
-        ApiResponse<User> apiResponse = new ApiResponse<>();
+    ApiResponse<UserResponse> createUser(@RequestBody @Valid UserCreationRequest request) {
+        ApiResponse<UserResponse> apiResponse = new ApiResponse<>();
 
         apiResponse.setResult(userService.createUser(request));
         apiResponse.setCode(SuccessCode.CREATE_SUCCESS.getCode());
@@ -34,6 +38,13 @@ public class UserController {
 
     @GetMapping("/get-users")
     ApiResponse<List<UserResponse>> getUsers() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        // log authentication info
+        log.info("Username requesting: {}", authentication.getName());
+        authentication.getAuthorities()
+                .forEach((e) -> log.info(e.getAuthority()));
+
         ApiResponse<List<UserResponse>> apiResponse = new ApiResponse<>();
 
         apiResponse.setResult(userService.getUsers());
