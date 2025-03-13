@@ -31,3 +31,7 @@ ApplicationRunner se chay 1 lan khi start
 De lay thong tin authen trong request thi dung SecurityContextHolder
 
 ngoai dung hasAnyAuthority de check role thi co the dung hasRole de check
+
+ngoai phan quyen tren endpoint thi co the phan quyen tren method (khuyen khich, thuc te xai nhieu)
+PreAuthorize("hasRole('AMDIN')"): chan truoc khi vao method >< PostAuthorize("hasRole('ADMIN')") vao method
+va chan khi return (it dung)

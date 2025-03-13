@@ -12,8 +12,14 @@ import com.newbie.identityService.repository.UserRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.security.access.prepost.PostAuthorize;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -40,7 +46,6 @@ public class UserService {
 //                .password("")
 //                .build();
 
-        // use Mapper for create user
 //        User user = new User();
 //        user.setUsername(request.getUsername());
 //        user.setPassword(request.getPassword());
@@ -48,6 +53,7 @@ public class UserService {
 //        user.setLastName(request.getLastName());
 //        user.setDob(request.getDob());
 
+        // use Mapper for create user
         User user = userMapper.toUser(request);
 
         user.setPassword(passwordEncoder.encode(request.getPassword()));
@@ -59,18 +65,47 @@ public class UserService {
         return userMapper.toUserResponse(userRepository.save(user));
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     public List<UserResponse> getUsers() {
+
         return userMapper.toListUserResponse(userRepository.findAll());
+
+        // cach khac
+//         return userRepository.findAll().stream()
+//                 .map(userMapper::toUserResponse).toList();
     }
 
+    public UserResponse getMyInfo() {
+        SecurityContext securityContext = SecurityContextHolder.getContext();
+
+        // dung username
+//        String username = securityContext.getAuthentication().getName();
+//
+//        return userMapper.toUserResponse(userRepository.findByUsername(username)
+//                .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED)));
+
+        // dung userId
+        Authentication authentication = securityContext.getAuthentication();
+
+        Jwt jwt = (Jwt) authentication.getPrincipal();
+
+        String userId = jwt.getClaim("userId");
+
+        return userMapper.toUserResponse(userRepository.findById(userId)
+                .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED)));
+
+    }
+
+    // chi lay thong tin cua user dang login
+    @PostAuthorize("returnObject.username == authentication.name")
     public UserResponse getUserById(String userId) {
         return userMapper.toUserResponse(userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found!")));
+                .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED)));
     }
 
     public UserResponse updateUser(UserUpdateRequest request, String userId) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found!"));
+                .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
 
 //        user.setPassword(request.getPassword());
 //        user.setFirstName(request.getFirstName());
