@@ -35,3 +35,12 @@ ngoai dung hasAnyAuthority de check role thi co the dung hasRole de check
 ngoai phan quyen tren endpoint thi co the phan quyen tren method (khuyen khich, thuc te xai nhieu)
 PreAuthorize("hasRole('AMDIN')"): chan truoc khi vao method >< PostAuthorize("hasRole('ADMIN')") vao method
 va chan khi return (it dung)
+
+------
+loi 401 - forbidden se khac voi 403, no duoc xu ly o tang filter truoc khi vao tang service
+va khong xu ly duoc bang global exception handler
+=> de xu ly loi 401, ta xu ly trong security config
+
+objectMapper de convert object to String
+
+authenticationEntryPoint de dieu huong user neu kh duoc authorized

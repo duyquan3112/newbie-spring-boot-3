@@ -1,6 +1,5 @@
 package com.newbie.identityService.configuration;
 
-import com.newbie.identityService.enums.Role;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.NonFinal;
@@ -54,7 +53,8 @@ public class SecurityConfig {
 
         httpSecurity.oauth2ResourceServer(oAuth2Config ->
                 oAuth2Config.jwt(jwtConfigurer -> jwtConfigurer.decoder(jwtDecoder())
-                        .jwtAuthenticationConverter(customJwtConverter()))
+                                .jwtAuthenticationConverter(customJwtConverter()))
+                        .authenticationEntryPoint(new JwtAuthenticationEntryPoint())
         );
 
         httpSecurity.csrf(AbstractHttpConfigurer::disable);
