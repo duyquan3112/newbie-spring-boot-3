@@ -44,3 +44,15 @@ va khong xu ly duoc bang global exception handler
 objectMapper de convert object to String
 
 authenticationEntryPoint de dieu huong user neu kh duoc authorized
+
+-----
+trong thuc te viec authorized se phuc tap hon nhieu,
+1 user co the co 1 hoac nhieu role
+va 1 role co the co 1 hoac nhieu permission
+
+he thong phan quyen bang role duoc goi
+la RoleBaseAuthorization
+
+-----
+
+JPA la 1 ORM (Object Relational Mapping)

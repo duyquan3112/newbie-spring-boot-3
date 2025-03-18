@@ -10,7 +10,7 @@ spring:
     password: root
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: update #for dev, learn; not recommend in real case
     show-sql: true
 
 jwt:

@@ -14,6 +14,8 @@ public enum ErrorCode {
     PASSWORD_INVALID(4, "Password must be at least 8-characters", HttpStatus.BAD_REQUEST),
     UNAUTHENTICATED(5, "Unauthenticated!", HttpStatus.UNAUTHORIZED),
     UNAUTHORIZED(6, "Unauthorized!", HttpStatus.FORBIDDEN),
+    PERMISSION_EXISTED(6, "Permission existed!", HttpStatus.BAD_REQUEST),
+    ROLE_EXISTED(6, "Role existed!", HttpStatus.BAD_REQUEST),
     ;
 
     ErrorCode(int code, String message, HttpStatusCode statusCode) {
