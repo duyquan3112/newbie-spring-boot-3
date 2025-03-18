@@ -7,6 +7,7 @@ import com.newbie.identityService.dto.response.IntrospectResponse;
 import com.newbie.identityService.entity.User;
 import com.newbie.identityService.exception.AppException;
 import com.newbie.identityService.exception.ErrorCode;
+import com.newbie.identityService.repository.RoleRepository;
 import com.newbie.identityService.repository.UserRepository;
 import com.nimbusds.jose.*;
 import com.nimbusds.jose.crypto.MACSigner;
@@ -36,6 +37,7 @@ import java.util.StringJoiner;
 @Service
 public class AuthenticationService {
     UserRepository userRepository;
+    RoleRepository roleRepository;
 
     @NonFinal
     @Value("${jwt.signerKey}")
@@ -104,9 +106,16 @@ public class AuthenticationService {
 
     private String buildScope(User user) {
         StringJoiner scope = new StringJoiner(" ");
-//        if (!CollectionUtils.isEmpty(user.getRoles())) {
-//            user.getRoles().forEach(scope::add);
-//        }
+        if (!CollectionUtils.isEmpty(user.getRoles())) {
+            user.getRoles().forEach((role -> {
+                scope.add("ROLE_" + role.getName());
+                if (!CollectionUtils.isEmpty(role.getPermissions())) {
+                    role.getPermissions().forEach(permission -> {
+                        scope.add(permission.getName());
+                    });
+                }
+            }));
+        }
 
         return scope.toString();
     }

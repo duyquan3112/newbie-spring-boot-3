@@ -1,7 +1,7 @@
 package com.newbie.identityService.configuration;
 
+import com.newbie.identityService.entity.Role;
 import com.newbie.identityService.entity.User;
-import com.newbie.identityService.enums.Role;
 import com.newbie.identityService.repository.UserRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -25,13 +25,14 @@ public class ApplicationInitConfig {
     ApplicationRunner applicationRunner(UserRepository userRepository) {
         return args -> {
             if (userRepository.findByUsername("admin").isEmpty()) {
-                HashSet<String> roles = new HashSet<>();
-                roles.add(Role.ADMIN.name());
-
+                HashSet<Role> roles = new HashSet<>();
+                roles.add(Role.builder()
+                        .name("ADMIN")
+                        .build());
                 User user = User.builder()
                         .username("admin")
                         .password(passwordEncoder.encode("admin"))
-                        //.roles(roles)
+                        .roles(roles)
                         .build();
 
                 userRepository.save(user);

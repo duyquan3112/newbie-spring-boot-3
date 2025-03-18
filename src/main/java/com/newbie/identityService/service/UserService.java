@@ -3,11 +3,12 @@ package com.newbie.identityService.service;
 import com.newbie.identityService.dto.request.UserCreationRequest;
 import com.newbie.identityService.dto.request.UserUpdateRequest;
 import com.newbie.identityService.dto.response.UserResponse;
+import com.newbie.identityService.entity.Role;
 import com.newbie.identityService.entity.User;
-import com.newbie.identityService.enums.Role;
 import com.newbie.identityService.exception.AppException;
 import com.newbie.identityService.exception.ErrorCode;
 import com.newbie.identityService.mapper.UserMapper;
+import com.newbie.identityService.repository.RoleRepository;
 import com.newbie.identityService.repository.UserRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -31,6 +32,7 @@ import java.util.List;
 @Service
 public class UserService {
     UserRepository userRepository;
+    RoleRepository roleRepository;
     UserMapper userMapper;
     PasswordEncoder passwordEncoder;
 
@@ -58,14 +60,13 @@ public class UserService {
 
         user.setPassword(passwordEncoder.encode(request.getPassword()));
 
-        HashSet<String> roles = new HashSet<>();
-        roles.add(Role.USER.name());
-        //user.setRoles(roles);
+        HashSet<Role> roles = new HashSet<>(roleRepository.findAllById(request.getRoles()));
+        user.setRoles(roles);
 
         return userMapper.toUserResponse(userRepository.save(user));
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public List<UserResponse> getUsers() {
 
         return userMapper.toListUserResponse(userRepository.findAll());
@@ -103,6 +104,7 @@ public class UserService {
                 .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED)));
     }
 
+    @PreAuthorize("hasAuthority('UPDATE')")
     public UserResponse updateUser(UserUpdateRequest request, String userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
@@ -113,10 +115,12 @@ public class UserService {
 //        user.setDob(request.getDob());
 
         userMapper.updateUser(user, request);
-
+        HashSet<Role> roles = new HashSet<>(roleRepository.findAllById(request.getRoles()));
+        user.setRoles(roles);
         return userMapper.toUserResponse(userRepository.save(user));
     }
 
+    @PreAuthorize("hasAuthority('DELETE')")
     public void deleteUser(String userId) {
         userRepository.deleteById(userId);
     }
