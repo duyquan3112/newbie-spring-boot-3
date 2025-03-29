@@ -28,12 +28,10 @@ public class UserController {
 
     @PostMapping("/create-user")
     ApiResponse<UserResponse> createUser(@RequestBody @Valid UserCreationRequest request) {
-        ApiResponse<UserResponse> apiResponse = new ApiResponse<>();
-
-        apiResponse.setResult(userService.createUser(request));
-        apiResponse.setCode(SuccessCode.CREATE_SUCCESS.getCode());
-
-        return apiResponse;
+        return ApiResponse.<UserResponse>builder()
+                .code(SuccessCode.CREATE_SUCCESS.getCode())
+                .result(userService.createUser(request))
+                .build();
     }
 
     @GetMapping("/get-users")
@@ -45,22 +43,18 @@ public class UserController {
         authentication.getAuthorities()
                 .forEach((e) -> log.info(e.getAuthority()));
 
-        ApiResponse<List<UserResponse>> apiResponse = new ApiResponse<>();
-
-        apiResponse.setResult(userService.getUsers());
-        apiResponse.setCode(SuccessCode.GET_SUCCESS.getCode());
-
-        return apiResponse;
+        return ApiResponse.<List<UserResponse>>builder()
+                .code(SuccessCode.GET_SUCCESS.getCode())
+                .result(userService.getUsers())
+                .build();
     }
 
     @GetMapping("/get-user/{userId}")
     ApiResponse<UserResponse> getUserById(@PathVariable("userId") String userId) {
-        ApiResponse<UserResponse> apiResponse = new ApiResponse<>();
-
-        apiResponse.setResult(userService.getUserById(userId));
-        apiResponse.setCode(SuccessCode.GET_SUCCESS.getCode());
-
-        return apiResponse;
+        return ApiResponse.<UserResponse>builder()
+                .code(SuccessCode.GET_SUCCESS.getCode())
+                .result(userService.getUserById(userId))
+                .build();
     }
 
     @GetMapping("/get-my-info")
@@ -71,24 +65,21 @@ public class UserController {
                 .build();
     }
 
-    @PutMapping("/update-user/{userId}")
-    ApiResponse<UserResponse> updateUser(@PathVariable("userId") String userId, @RequestBody UserUpdateRequest request) {
-        ApiResponse<UserResponse> apiResponse = new ApiResponse<>();
-
-        apiResponse.setResult(userService.updateUser(request, userId));
-        apiResponse.setCode(SuccessCode.UPDATE_SUCCESS.getCode());
-
-        return apiResponse;
+    @PatchMapping("/update-user/{userId}")
+    ApiResponse<UserResponse> updateUser(@PathVariable("userId") String userId,
+                                         @RequestBody @Valid UserUpdateRequest request) {
+        return ApiResponse.<UserResponse>builder()
+                .code(SuccessCode.UPDATE_SUCCESS.getCode())
+                .result(userService.updateUser(request, userId))
+                .build();
     }
 
     @DeleteMapping("/delete-user/{userId}")
     ApiResponse<String> deleteUser(@PathVariable("userId") String userId) {
-        ApiResponse<String> apiResponse = new ApiResponse<>();
         userService.deleteUser(userId);
-
-        apiResponse.setCode(SuccessCode.DELETE_SUCCESS.getCode());
-        apiResponse.setMessage("User has been deleted!");
-
-        return apiResponse;
+        return ApiResponse.<String>builder()
+                .code(SuccessCode.DELETE_SUCCESS.getCode())
+                .result("User has been deleted!")
+                .build();
     }
 }

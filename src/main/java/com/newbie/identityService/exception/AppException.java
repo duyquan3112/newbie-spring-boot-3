@@ -1,18 +1,16 @@
 package com.newbie.identityService.exception;
 
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.experimental.FieldDefaults;
+
+@Getter
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class AppException extends RuntimeException{
     private ErrorCode errorCode;
 
     public AppException(ErrorCode errorCode) {
         super(errorCode.getMessage());
-        this.errorCode = errorCode;
-    }
-
-    public ErrorCode getErrorCode() {
-        return errorCode;
-    }
-
-    public void setErrorCode(ErrorCode errorCode) {
         this.errorCode = errorCode;
     }
 }

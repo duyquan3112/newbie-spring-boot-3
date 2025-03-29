@@ -18,10 +18,10 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.util.HashSet;
 import java.util.List;
@@ -109,14 +109,15 @@ public class UserService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
 
-//        user.setPassword(request.getPassword());
-//        user.setFirstName(request.getFirstName());
-//        user.setLastName(request.getLastName());
-//        user.setDob(request.getDob());
-
         userMapper.updateUser(user, request);
-        HashSet<Role> roles = new HashSet<>(roleRepository.findAllById(request.getRoles()));
-        user.setRoles(roles);
+        if (!request.getRoles().isEmpty()) {
+            HashSet<Role> roles = new HashSet<>(roleRepository.findAllById(request.getRoles()));
+            user.setRoles(roles);
+        }
+        if (request.getPassword() != null && !request.getPassword().isEmpty()) {
+            user.setPassword(passwordEncoder.encode(request.getPassword()));
+        }
+
         return userMapper.toUserResponse(userRepository.save(user));
     }
 

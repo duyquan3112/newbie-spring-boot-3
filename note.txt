@@ -56,3 +56,24 @@ la RoleBaseAuthorization
 -----
 
 JPA la 1 ORM (Object Relational Mapping)
+
+------
+Custom Annotation cho Validation
+
+Moi validator chi nen chi chiu trach nhiem cho 1 loai validation
+
+@Target({FIELD,...}) -> annotation co the dung o dau
+@Retention(RUNTIME/COMPILE) -> custom annotation duoc chay khi nao
+@Constraint(validatedBy = { }) -> truyen class validator vao
+public @interface CustomAnnotation {
+    // 3 thuoc tinh co ban cua 1 annotation
+    String message() default "default msg";
+
+    Class<?>[] groups() default { };
+
+    Class<? extends Payload>[] payload() default { };
+
+}
+
+khi co loi validation thi se co exception MethodArgumentNotValidException
+co the lay thong tin validation trong exception de tra message ve client

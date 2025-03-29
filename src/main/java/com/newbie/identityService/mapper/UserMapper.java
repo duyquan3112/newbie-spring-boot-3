@@ -4,9 +4,7 @@ import com.newbie.identityService.dto.request.UserCreationRequest;
 import com.newbie.identityService.dto.request.UserUpdateRequest;
 import com.newbie.identityService.dto.response.UserResponse;
 import com.newbie.identityService.entity.User;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.MappingTarget;
+import org.mapstruct.*;
 
 import java.util.List;
 
@@ -23,5 +21,7 @@ public interface UserMapper {
 
     @Mapping(target = "roles", ignore = true)
     @Mapping(target = "password", ignore = true)
+    //ignore mapping null field
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     void updateUser(@MappingTarget User user, UserUpdateRequest request);
 }
