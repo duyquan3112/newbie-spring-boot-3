@@ -5,7 +5,6 @@ import com.newbie.identityService.dto.request.SuccessCode;
 import com.newbie.identityService.dto.request.UserCreationRequest;
 import com.newbie.identityService.dto.request.UserUpdateRequest;
 import com.newbie.identityService.dto.response.UserResponse;
-import com.newbie.identityService.entity.User;
 import com.newbie.identityService.service.UserService;
 import jakarta.validation.Valid;
 import lombok.AccessLevel;
