@@ -1,6 +1,7 @@
 package com.newbie.identityService.exception;
 
 import com.newbie.identityService.dto.response.ApiResponse;
+import com.newbie.identityService.enums.ErrorCode;
 import jakarta.validation.ConstraintViolation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;

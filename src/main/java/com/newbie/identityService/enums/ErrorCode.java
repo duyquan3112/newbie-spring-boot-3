@@ -1,4 +1,4 @@
-package com.newbie.identityService.exception;
+package com.newbie.identityService.enums;
 
 import lombok.Getter;
 import org.springframework.http.HttpStatus;

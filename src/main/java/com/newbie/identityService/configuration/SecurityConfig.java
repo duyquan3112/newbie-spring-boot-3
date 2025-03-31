@@ -1,6 +1,7 @@
 package com.newbie.identityService.configuration;
 
 import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.NonFinal;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,17 +28,17 @@ import javax.crypto.spec.SecretKeySpec;
 @EnableWebSecurity
 @EnableMethodSecurity
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@RequiredArgsConstructor
 public class SecurityConfig {
 
     String[] PUBLIC_ENDPOINTS = {
             "/users/create-user",
             "/auth/token",
-            "/auth/introspect"
+            "/auth/introspect",
+            "/auth/logout"
     };
 
-    @Value("${jwt.signerKey}")
-    @NonFinal
-    String signerKey;
+    private CustomJwtDecoder customJwtDecoder;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
@@ -52,7 +53,7 @@ public class SecurityConfig {
                         .authenticated());
 
         httpSecurity.oauth2ResourceServer(oAuth2Config ->
-                oAuth2Config.jwt(jwtConfigurer -> jwtConfigurer.decoder(jwtDecoder())
+                oAuth2Config.jwt(jwtConfigurer -> jwtConfigurer.decoder(customJwtDecoder)
                                 .jwtAuthenticationConverter(customJwtConverter()))
                         .authenticationEntryPoint(new JwtAuthenticationEntryPoint())
         );
@@ -60,15 +61,6 @@ public class SecurityConfig {
         httpSecurity.csrf(AbstractHttpConfigurer::disable);
 
         return httpSecurity.build();
-    }
-
-    @Bean
-    JwtDecoder jwtDecoder() {
-        SecretKeySpec secretKeySpec = new SecretKeySpec(signerKey.getBytes(), "HS512");
-        return NimbusJwtDecoder
-                .withSecretKey(secretKeySpec)
-                .macAlgorithm(MacAlgorithm.HS512)
-                .build();
     }
 
     // custom jwt converter

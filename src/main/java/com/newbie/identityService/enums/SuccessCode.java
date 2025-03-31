@@ -1,4 +1,4 @@
-package com.newbie.identityService.dto.request;
+package com.newbie.identityService.enums;
 
 public enum SuccessCode {
     CREATE_SUCCESS(200),

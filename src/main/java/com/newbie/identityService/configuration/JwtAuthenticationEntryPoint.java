@@ -2,7 +2,7 @@ package com.newbie.identityService.configuration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.newbie.identityService.dto.response.ApiResponse;
-import com.newbie.identityService.exception.ErrorCode;
+import com.newbie.identityService.enums.ErrorCode;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

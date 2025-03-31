@@ -1,7 +1,7 @@
 package com.newbie.identityService.controller;
 
 import com.newbie.identityService.dto.response.ApiResponse;
-import com.newbie.identityService.dto.request.SuccessCode;
+import com.newbie.identityService.enums.SuccessCode;
 import com.newbie.identityService.dto.request.UserCreationRequest;
 import com.newbie.identityService.dto.request.UserUpdateRequest;
 import com.newbie.identityService.dto.response.UserResponse;

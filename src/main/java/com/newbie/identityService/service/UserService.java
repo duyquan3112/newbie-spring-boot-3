@@ -6,7 +6,7 @@ import com.newbie.identityService.dto.response.UserResponse;
 import com.newbie.identityService.entity.Role;
 import com.newbie.identityService.entity.User;
 import com.newbie.identityService.exception.AppException;
-import com.newbie.identityService.exception.ErrorCode;
+import com.newbie.identityService.enums.ErrorCode;
 import com.newbie.identityService.mapper.UserMapper;
 import com.newbie.identityService.repository.RoleRepository;
 import com.newbie.identityService.repository.UserRepository;

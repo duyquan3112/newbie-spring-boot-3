@@ -1,5 +1,6 @@
 package com.newbie.identityService.exception;
 
+import com.newbie.identityService.enums.ErrorCode;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.experimental.FieldDefaults;
