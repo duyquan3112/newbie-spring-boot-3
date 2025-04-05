@@ -1,6 +1,7 @@
 package com.newbie.identityService.controller;
 
 import com.newbie.identityService.dto.request.LogoutRequest;
+import com.newbie.identityService.dto.request.RefreshTokenRequest;
 import com.newbie.identityService.dto.response.ApiResponse;
 import com.newbie.identityService.dto.request.AuthenticationRequest;
 import com.newbie.identityService.dto.request.IntrospectRequest;
@@ -46,6 +47,16 @@ public class AuthenticationController {
     ApiResponse<Void> logout(@RequestBody LogoutRequest request) throws ParseException, JOSEException {
         authenticationService.logout(request);
         return ApiResponse.<Void>builder()
+                .build();
+    }
+
+    @PostMapping("/refresh")
+    ApiResponse<AuthenticationResponse> refreshToken(@RequestBody RefreshTokenRequest request)
+            throws ParseException, JOSEException {
+        AuthenticationResponse response = authenticationService.refreshToken(request);
+
+        return ApiResponse.<AuthenticationResponse>builder()
+                .result(response)
                 .build();
     }
 }

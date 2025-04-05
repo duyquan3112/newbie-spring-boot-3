@@ -35,7 +35,8 @@ public class SecurityConfig {
             "/users/create-user",
             "/auth/token",
             "/auth/introspect",
-            "/auth/logout"
+            "/auth/logout",
+            "/auth/refresh"
     };
 
     private CustomJwtDecoder customJwtDecoder;

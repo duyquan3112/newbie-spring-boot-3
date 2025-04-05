@@ -2,8 +2,6 @@ package com.newbie.identityService.configuration;
 
 import com.newbie.identityService.dto.request.IntrospectRequest;
 import com.newbie.identityService.dto.response.IntrospectResponse;
-import com.newbie.identityService.enums.ErrorCode;
-import com.newbie.identityService.exception.AppException;
 import com.newbie.identityService.service.AuthenticationService;
 import com.nimbusds.jose.JOSEException;
 import lombok.RequiredArgsConstructor;
